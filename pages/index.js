@@ -40,7 +40,7 @@ const About = ({Cookie, Link}) => {
   const TOKEN = jwt.decode(Cookie.jamesworldwidetoken)
   const [loaded, setLoaded] = useState(false);
    useEffect(()=>{
-    console.log(TOKEN)
+    // console.log(TOKEN)
     !TOKEN && router.push("/login");
     setLoaded(true)
     //HANDLE LOADING PAGE

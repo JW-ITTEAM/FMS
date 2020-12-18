@@ -1,9 +1,14 @@
 import {useDropzone} from 'react-dropzone'
-import { Badge, Col, Row, Button } from "reactstrap"
+import { Badge, Col, Row, Button, Alert } from "reactstrap"
 import fetch from 'node-fetch'
 import axios, { post } from 'axios'
 
+
 export const Files = ({FilePath, FILE}) => {
+    // ACCEPTED FILE FORMAT
+    // PDF, IMAGE, EXCEL, DOCS, MSG
+    const acceptFileType = 'image/*, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .msg, .pdf';
+
     const baseStyle = {
         flex: 1,
         display: 'flex',
@@ -33,31 +38,34 @@ export const Files = ({FilePath, FILE}) => {
         borderColor: '#ff1744'
       };
     const onDrop = React.useCallback(async acceptedFiles => {
-        console.log(acceptedFiles)
-        const formData = new FormData()
-        formData.append('file', acceptedFiles[0])
-        const config = {
-          headers: {
-            'content-type': 'multipart/form-data',
-            path: FilePath
-          }
-        }
-        console.log("UPLOAD START")
-        const upload = new Promise((res, rej)=>res(post(`${process.env.BASE_URL}api/file/upload`, formData, config)))
-        upload.then(ga=> console.log(ga)) 
+      if (acceptedFiles.length > 0) {
+        acceptedFiles.map(async (data, index) => {
+          const formData = new FormData();
+      formData.append("file", acceptedFiles[index]);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+          path: FilePath,
+        },
+      };
 
-        // const Fetch = await fetch(`http://localhost:3000/api/files/NEW_PATH`).then(t=>t.json())
-        // console.log(Fetch)
+        const upload = new Promise((res, rej)=>res(post(`/api/file/upload`, formData, config)))
+        upload.then(ga=> console.log(ga)) 
+          // console.log(index)
+        });
+      }
+
       }, [])
 
       const {
         getRootProps,
         getInputProps,
+        fileRejections,
         isDragActive,
         isDragAccept,
         isDragReject,
         acceptedFiles
-      } = useDropzone({onDrop});
+      } = useDropzone({accept: acceptFileType, minSize: 0, maxSize: 10485760, onDrop});
 
       const files = acceptedFiles.map(file => <a href={URL.createObjectURL(file)} key={file.path} target="__blank"><Badge className="mr-2" color="primary"><i className="fa fa-file"></i>{file.path}</Badge></a>);
 
@@ -90,6 +98,8 @@ export const Files = ({FilePath, FILE}) => {
                 <input {...getInputProps()} />
                 <p>UPLOAD FILES</p>
               </div>
+                {files.length>0 && <Alert className="mt-2" color="warning">{files.length} File Uploaded Successfully</Alert>}
+    {fileRejections.length>0 && <Alert className="mt-2" color="danger">{fileRejections.length} File Upload Fail <br /> {fileRejections.map(ga=>(<span>{ga.file.path} - {ga.errors[0].message}<br /></span>))}</Alert>}
               <aside className="mt-3">
                 <ul>{files}</ul>
               </aside>

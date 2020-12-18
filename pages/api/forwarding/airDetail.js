@@ -87,7 +87,6 @@ export default async (req, res) => {
 
         res.status(200).send(master);
       } else {
-        console.log(master)
         res.status(400).send(master)
       }
     }

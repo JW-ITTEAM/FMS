@@ -12,22 +12,21 @@ export default async (req, res) => {
     );
     
     const form = new formidable.IncomingForm();
-    console.log("FORM DEFINED")
+    // console.log("FORM DEFINED")
     form.uploadDir = './public/temp';
     form.keepExtensions=true;
     form.parse(req, async (err, fields, files) => {
-        console.log(err)
-        console.log(req.headers.path)
+        if(err) console.log(err)
 
         if(err || !files.file) {
             console.log("err catched")
             res.status(401).end("FALSE")
         } else {
             const exist = await client.exists(`/IT/JAMESWORLDWIDE_WEB/FORWARDING/${req.headers.path}`)
-            console.log(exist)
+            // console.log(exist)
             if (exist) {
                 fs.readFile(files.file.path, async (err,data) => {
-                    await client.putFileContents(`/IT/JAMESWORLDWIDE_WEB/FORWARDING/${req.headers.path}/${files.file.name}`, data, {
+                    await client.putFileContents(`/IT/JAMESWORLDWIDE_WEB/FORWARDING/${req.headers.path}/${files.file.name.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, "")}`, data, {
                     onUploadProgress: (progress) => {
                     console.log(`Uploaded ${progress.loaded} bytes of ${progress.total}`);
                 }})})
@@ -36,7 +35,8 @@ export default async (req, res) => {
                     if(err) {
                         console.log(err)
                     } else {
-                        console.log('FILE REMOVED')
+                        // FILE REMOVED
+                        console.log("FILE UPLOADED")
                     }
                 })
             } else {
@@ -61,9 +61,9 @@ export default async (req, res) => {
         }
     });
 };
-
 export const config = {
     api: {
+      externalResolver: true,
       bodyParser: false,
-  }
-}
+    },
+};

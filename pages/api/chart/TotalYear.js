@@ -53,14 +53,12 @@ export default (req, res) => {
           }
         );
       });
-      return resolve();
+      resolve();
     } catch (err) {
-      console.log(err)
-      res.status(500).end()
-      return resolve()
+      console.log(err);
+      res.status(500).end();
+      resolve();
     }
-    res.status(405).end()
-    return resolve()
   });
 };
 export const config = {

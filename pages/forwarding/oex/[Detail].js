@@ -36,7 +36,7 @@ const Detail = ({ Cookie, OCEAN, FILE }) => {
         setHouse(OCEAN.H)
         setContainer(OCEAN.C)
         setAP(OCEAN.A)
-        console.log(OCEAN)
+        // console.log(OCEAN)
     } else {
         setMaster(false)
     }
@@ -90,7 +90,7 @@ export async function getServerSideProps({req, query}) {
   const FETCH = await fetch(`${process.env.BASE_URL}api/forwarding/oceanDetail`, {headers: {reference: query.Detail, import: 0}})
   const FJSON = await FETCH.json();
 
-  const Fetch = await fetch(`http://localhost:3000/api/files/FORWARDING/${query.Detail}`)
+  const Fetch = await fetch(`${process.env.BASE_URL}api/files/FORWARDING/${query.Detail}`)
   var Files=null;
   if(Fetch.status===200) {
     Files = await Fetch.json()

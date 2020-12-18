@@ -114,10 +114,10 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
           TYPE==="AIR" ? 
           <Col sm="9" className="pt-1">
             <ButtonGroup className="pr-3">
-              <Button size="sm" outline color="primary">Check</Button>
-              <Button size="sm" outline color="primary">Card</Button>
-              <Button size="sm" outline color="primary">Wire</Button>
-              <Button size="sm" outline color="primary">ACH</Button>
+                <Button size="sm" outline color="primary" onClick={()=>setAPType("CHECK")}>Check</Button>
+                <Button size="sm" outline color="primary" onClick={()=>setAPType("CARD")}>Card</Button>
+                <Button size="sm" outline color="primary" onClick={()=>setAPType("WIRE")}>Wire</Button>
+                <Button size="sm" outline color="primary" onClick={()=>setAPType("ACH")}>ACH</Button>
             </ButtonGroup>
             {isClient && (
               <BlobProvider

@@ -8,7 +8,7 @@
     "serverDev": "node server.js",
     "build": "next build",
     "start": "next start -p 80",
-    "docker": "docker build . -t nextjstest"
+    "docker": "docker build . -t fms_sarah_version1.0.1"
   },
   "keywords": [],
   "author": "",

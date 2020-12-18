@@ -22,7 +22,7 @@ export default (req, res) => {
           `SELECT
             COUNT(F_ID) AS COUNT, DATEPART(week,F_ETA) AS WEEKS
         FROM
-            T_AIMMAIN
+            T_OIMMAIN
         WHERE
             F_ETA >= '2020-01-01'
         GROUP BY
@@ -36,18 +36,11 @@ export default (req, res) => {
           }
         );
       });
-      return resolve();
+      resolve();
     } catch (err) {
-      console.log(err)
-      res.status(500).end()
-      return resolve()
+      console.log(err);
+      res.status(500).end();
+      resolve();
     }
-    res.status(405).end()
-    return resolve()
   });
-};
-export const config = {
-  api: {
-    externalResolver: true,
-  },
 };

@@ -40,7 +40,6 @@ export default async (req, res) => {
       }
     }
     NEW()
-    resolve()
   });
 };
 

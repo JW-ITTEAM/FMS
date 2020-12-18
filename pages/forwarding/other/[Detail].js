@@ -32,7 +32,7 @@ const Detail = ({ Cookie, OTHER, FILE }) => {
     if(OTHER.status) {
         setOth(OTHER.M)
         setAP(OTHER.A)
-        console.log(OTHER)
+        // console.log(OTHER)
     } else {
         setOth(false)
     }
@@ -85,7 +85,7 @@ export async function getServerSideProps({req, query}) {
   const FETCH = await fetch(`${process.env.BASE_URL}api/forwarding/otherDetail`, {headers: {reference: query.Detail}})
   const FJSON = await FETCH.json();
 
-  const Fetch = await fetch(`http://localhost:3000/api/files/FORWARDING/${query.Detail}`)
+  const Fetch = await fetch(`${process.env.BASE_URL}api/files/FORWARDING/${query.Detail}`)
   var Files=null;
   if(Fetch.status===200) {
     Files = await Fetch.json()

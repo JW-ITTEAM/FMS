@@ -17,7 +17,7 @@ export default async (req, res) => {
   const QRY = `select (select T_COMPANY.F_SName from T_COMPANY where T_COMPANY.F_ID =${parseInt(req.headers.import)?"T_OIMMAIN":"T_OOMMAIN"}.F_Agent) as AGENT,
   (select T_COMPANY.F_SName from T_COMPANY where T_COMPANY.F_ID = ${parseInt(req.headers.import) ? "T_OIMMAIN" : "T_OOMMAIN"}.F_Carrier) as CARRIER,
   * from ${parseInt(req.headers.import)?'T_OIMMAIN':'T_OOMMAIN'} WHERE F_RefNo='${req.headers.reference}';`;
-  console.log(QRY)
+  // console.log(QRY)
   //[CONNECT] MSSQL
   sql.connect(SQLconfig, function (err) {
     if (err) console.log(err);
@@ -118,7 +118,7 @@ export default async (req, res) => {
 
         res.status(200).send(master);
       } else {
-        console.log(master)
+        // console.log(master)
         res.status(400).send(master)
       }
     }

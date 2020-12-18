@@ -61,7 +61,6 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     } finally {
       pool.close();
     }
-    resolve();
   });
 }
 

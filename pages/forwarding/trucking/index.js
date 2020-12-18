@@ -178,8 +178,6 @@ const Index = ({Cookie}) => {
 
    const emailHref = `mailto:${TOKEN && TOKEN.first} ${TOKEN &&TOKEN.last} [JW] <${TOKEN&&TOKEN.email}>?bcc=${mailBCC}&subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`
 
-   
-
    if(TOKEN && TOKEN.group) {
      return (
        <Layout TOKEN={TOKEN} TITLE="TRUCKING">

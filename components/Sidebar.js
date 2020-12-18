@@ -14,7 +14,7 @@ const Sidebar = ({level}) => {
   
   const desktopView = {
     background: "#fff",
-    backgroundImage: 'linear-gradient(to top, #fff1eb 0%, #ace0f9 100%)',
+    backgroundImage: 'linear-gradient(to top, #bdffe2 0%, #ffad8a 100%)',
     borderRight: "1px solid #ddd",
     boxShadow: '1px 2px 2px #DCDCDC',
     position: "fixed",
@@ -22,7 +22,7 @@ const Sidebar = ({level}) => {
   }
   const mobileView = {
     background: "#fff",
-    backgroundImage: 'linear-gradient(to top, #fff1eb 0%, #ace0f9 100%)',
+    backgroundImage: 'linear-gradient(to top, #66ffbd 0%, #ff7b63 100%)',
     borderRight: "1px solid #ddd",
     boxShadow: '1px 2px 2px #DCDCDC',
     position: "fixed",
@@ -31,6 +31,8 @@ const Sidebar = ({level}) => {
   }
   const mobileIcon = {textAlign: 'left'}
   const desktopIcon = {textAlign: 'center'}
+
+  const TextStyle = {paddingRight: 20, color: 'DarkGoldenRod'}
   return (
     <>
       <SideNav
@@ -54,7 +56,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="HOME"
             >
               {level ? "ADMIN" : "HOME"}
@@ -73,7 +75,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="USER"
             >
               USER
@@ -92,7 +94,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="BOARD"
             >
               BOARD
@@ -111,7 +113,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="FORWARDING"
             >
               FORWARDING
@@ -155,7 +157,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="TRUCKING"
             >
               TRUCKING
@@ -174,7 +176,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="WAREHOUSE"
             >
               WAREHOUSE
@@ -213,7 +215,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="CALENDAR"
             >
               CALENDAR
@@ -233,7 +235,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="import"
             >
               IMPORT
@@ -258,7 +260,7 @@ const Sidebar = ({level}) => {
                 />
               </NavIcon>
               <NavText
-                style={{ paddingRight: 20 }}
+                style={TextStyle}
                 title="ADMIN"
               >
                 ADMIN
@@ -278,7 +280,7 @@ const Sidebar = ({level}) => {
               />
             </NavIcon>
             <NavText
-              style={{ paddingRight: 20 }}
+              style={TextStyle}
               title="SIGN OUT"
             >
               SIGN OUT

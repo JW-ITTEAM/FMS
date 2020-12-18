@@ -86,7 +86,7 @@ const Index = ({ Cookie, Re }) => {
 
   const columnStyle = {
     fontSize: "0.8em",
-    textAlign: "center",
+    textAlign: "left",
     verticalAlign: "middle",
     wordWrap: "break-word",
   };
@@ -94,7 +94,7 @@ const Index = ({ Cookie, Re }) => {
     {
       dataField: "RefNO",
       text: "REF",
-      formatter: (cell) => <a href="#">{cell}</a>,
+      formatter: (cell) => <a href="#" style={{fontSize: '0.9em'}}>{cell}</a>,
       events: {
         onClick: (e, columns, columnIndex, row) => {
           console.log(row.MASTER_TABLE);
@@ -158,8 +158,8 @@ const Index = ({ Cookie, Re }) => {
       sort: true,
     },
     {
-      dataField: "ETA",
-      text: "ETA",
+      dataField: "POSTDATE",
+      text: "POST",
       style: columnStyle,
       sort: true,
       headerStyle: { width: "7%", fontSize: "0.8em", textAlign: "center" },
@@ -194,18 +194,62 @@ const Index = ({ Cookie, Re }) => {
       },
     },
     {
+      dataField: "ETA",
+      text: "ETA",
+      style: columnStyle,
+      sort: true,
+      headerStyle: { width: "7%", fontSize: "0.8em", textAlign: "center" },
+      formatter: (cell) => {
+        if (moment(cell).isSameOrBefore(moment())) {
+          return (
+            <div style={{ color: "gray" }}>{moment(cell).format("L")}</div>
+          );
+        } else {
+          return (
+            <div style={{ color: "blue" }}>{moment(cell).format("L")}</div>
+          );
+        }
+      },
+    },
+    {
       dataField: "U1ID",
       text: "PIC",
       style: columnStyle,
-      headerStyle: { fontSize: "0.8rem", width: "10%", textAlign: "center" },
+      headerStyle: { fontSize: "0.8rem", width: "6%", textAlign: "center" },
       sort: true,
     },
   ];
 
   const customTotal = (from, to, size) => (
-    <span className="react-bootstrap-table-pagination-total ml-2">
+    <span className="react-bootstrap-table-pagination-total ml-2 text-secondary">
       Showing { from } to { to } of { size } Results
     </span>
+  );
+
+  const sizePerPageRenderer = ({
+    options,
+    currSizePerPage,
+    onSizePerPageChange
+  }) => (
+    <div className="btn-group" role="group">
+      {
+        options.map((option) => {
+          const isSelect = currSizePerPage === `${option.page}`;
+          return (
+            <Button
+              key={ option.text }
+              type="button"
+              onClick={ () => onSizePerPageChange(option.page) }
+              style={{borderRadius: '0'}}
+              size="sm"
+              className={ `btn mb-2 ${isSelect ? 'btn-secondary' : 'btn-info'}` }
+            >
+              { option.text }
+            </Button>
+          );
+        })
+      }
+    </div>
   );
 
   if (TOKEN && TOKEN.group) {
@@ -274,6 +318,7 @@ const Index = ({ Cookie, Re }) => {
                   pagination={paginationFactory({
                     showTotal: true,
                     paginationTotalRenderer: customTotal,
+                    sizePerPageRenderer
                   })}
                 />
               </Col>
@@ -396,6 +441,9 @@ const Index = ({ Cookie, Re }) => {
             span {
               font-family: "NEXON Lv2 Gothic";
               font-size: 0.9rem;
+            }
+            .page-link {
+              border-radius: 0;
             }
             .fa-search {
               position: absolute;

@@ -20,15 +20,15 @@ export default (req, res) => {
         var request = new sql.Request();
         request.query(
           `SELECT
-            COUNT(F_ID) AS COUNT, DATEPART(week,F_ETA) AS WEEKS
+            COUNT(F_ID) AS COUNT, DATEPART(week,ETA) AS WEEKS
         FROM
-            T_OIMMAIN
+          V_JWI_OIMSRC
         WHERE
-            F_ETA >= '2020-01-01'
+            ETA >= '2020-01-01'
         GROUP BY
-            DATEPART (week,F_ETA)
+            DATEPART (week,ETA)
         ORDER BY
-            DATEPART (week,F_ETA)
+            DATEPART (week,ETA)
         ;`,
           function (err, data) {
             if (err) console.log(err);
@@ -36,13 +36,16 @@ export default (req, res) => {
           }
         );
       });
-      return resolve();
+      resolve();
     } catch (err) {
-      console.log(err)
-      res.status(500).end()
-      return resolve()
+      console.log(err);
+      res.status(500).end();
+      resolve();
     }
-    res.status(405).end()
-    return resolve()
   });
+};
+export const config = {
+  api: {
+    externalResolver: true,
+  },
 };

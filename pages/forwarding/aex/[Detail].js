@@ -34,7 +34,7 @@ const Detail = ({ Cookie, AIR, FILE }) => {
         setMaster(AIR.M)
         setHouse(AIR.H)
         setAP(AIR.A)
-        console.log(AIR)
+        // console.log(AIR)
     } else {
         setMaster(false)
     }
@@ -87,7 +87,7 @@ export async function getServerSideProps({req, query}) {
   const FETCH = await fetch(`${process.env.BASE_URL}api/forwarding/airDetail`, {headers: {reference: query.Detail, import: 0}})
   const FJSON = await FETCH.json();
 
-  const Fetch = await fetch(`http://localhost:3000/api/files/FORWARDING/${query.Detail}`)
+  const Fetch = await fetch(`${process.env.BASE_URL}api/files/FORWARDING/${query.Detail}`)
   var Files=null;
   if(Fetch.status===200) {
     Files = await Fetch.json()

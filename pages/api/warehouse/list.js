@@ -23,6 +23,7 @@ export default (req, res) => {
           function (err, data) {
             if (err) console.log(err);
             res.status(200).end(JSON.stringify(data.recordset));
+            
           }
         );
       });
