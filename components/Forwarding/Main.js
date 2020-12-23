@@ -18,10 +18,9 @@ import { CheckRequestForm } from "./CheckRequestForm";
 import { Files } from "./Files";
 //Acitivity
 import { Activity } from "./Activity";
-import { set } from "js-cookie";
 
 
-const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
+const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }) => {
     
     const [isClient, setIsClient] = useState(false);
     const [APType, setAPType] = useState("CHECK");
@@ -33,7 +32,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-    const Print = ({Type, House, Master}) => (
+    const Print = ({House, Master}) => (
       <>
       <hr />
         <Row>
@@ -46,7 +45,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
               FORMS
             </span>
           </Col>
-          {Type==="OCEAN" ? 
+          {TYPE=="OCEAN" ? 
           <Col sm="9" className="pt-1">
             <ButtonGroup className="pr-3">
                 <Button size="sm" outline color="primary" onClick={()=>setAPType("CHECK")}>Check</Button>
@@ -111,7 +110,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
             )}
           </Col>
           :
-          TYPE==="AIR" ? 
+          TYPE=="AIR" ? 
           <Col sm="9" className="pt-1">
             <ButtonGroup className="pr-3">
                 <Button size="sm" outline color="primary" onClick={()=>setAPType("CHECK")}>Check</Button>
@@ -261,7 +260,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
                 </Table>
               </Col>
               <Col sm="12">
-                <Print Type="OCEAN" House={House} Master={Master} />
+                {/* <Print House={House} Master={Master} /> */}
                 {/* <Mail /> */}
                 <Files FilePath={Master.F_RefNo} FILE={FILES} />
               </Col>
@@ -458,7 +457,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
               ))}
           </Col>
           <Col sm="12">
-            <Activity />
+            <Activity REF={Master.F_RefNo} USER={USER} EXTRA={EXTRA}/>
           </Col>
         </Row>
       );
@@ -492,7 +491,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
                   </Table>
                 </Col>
                 <Col sm="12">
-                  <Print Type="AIR" House={House} Master={Master} />
+                  <Print House={House} Master={Master} />
                   {/* <Mail /> */}
                   <Files FilePath={Master.F_RefNo} FILE={FILES} />
                 </Col>
@@ -584,7 +583,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
                 ))}
             </Col>
             <Col sm="12">
-            <Activity />
+            <Activity REF={Master.F_RefNo} USER={USER} EXTRA={EXTRA}/>
             </Col>
             <style global jsx>
               {`
@@ -688,7 +687,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES }) => {
               <Files FilePath={OTHER.F_RefNo} FILE={FILES} />
             </Col>
             <Col sm="12">
-              <Activity />
+              <Activity REF={OTHER.F_RefNo} USER={USER} EXTRA={EXTRA}/>
             </Col>
             <style global jsx>
               {`

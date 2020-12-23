@@ -3,10 +3,6 @@ import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import fetch from "node-fetch";
 import Layout from "../../components/Layout";
-import Header from "../../components/Index/Header";
-import YearChart from "../../components/Index/YearChart";
-import OIM from "../../components/Index/OIM";
-import AIM from "../../components/Index/AIM";
 import { Badge, Button, Card, Col, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Spinner } from "reactstrap";
 import { useRouter } from "next/router";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -17,71 +13,29 @@ import moment from "moment";
 const Index = ({ Cookie, Re }) => {
   const TOKEN = jwt.decode(Cookie.jamesworldwidetoken);
   const router = useRouter();
-  const [Year, setYear] = useState({});
-  const [Ocean, setOcean] = useState([]);
-  const [Air, setAir] = useState([]);
-
   const [search, setSearch] = useState(false);
-  const [result, setResult] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   function indication() {
     return (
       <span>
-        {loading ? (
-          <Spinner color="primary" size="sm" />
-        ) : result ? (
-          `Your search ${search} did not match any documents.`
+        {router.query.search ? (
+          `Your search "${router.query.search}" did not match any documents.`
         ) : (
-          `Please search`
+          `Please search something`
         )}
       </span>
     );
   }
 
   const getResult = async () => {
-    setResult([]);
-    setLoading(true);
-    // V_JWI_SERACH - COLUMNS: MASTER_TABLE / MASTER_ID / RefNO / MASTER_BLNO / HOUSE_BLNO / CUSTOMER / CONSINGEE / SHIPPER / ETD / ETA / PIC
-    const fetchs = await fetch("/api/forwarding/freightStreamSearch", {
-      headers: {
-        query: search,
-        name: TOKEN.username,
-        options: [
-          "CUSTOMER",
-          "CONSIGNEE",
-          "SHIPPER",
-          "MASTER_BLNO",
-          "HOUSE_BLNO",
-          "RefNO",
-        ],
-      },
-    });
+    // SET THE QUERY AT THE PATH - base/forwarding?query.search -> LOAD DATA FROM SERVER SIDE 
     router.push({ pathname: `/forwarding`, query: { search } });
-    if (fetchs.status === 200) {
-      const ocean = await fetchs.json();
-      if (ocean.result) {
-        setResult(ocean.ocean);
-      } else {
-        setLoading(false)
-        console.log("NO RESULT");
-      }
-    } else {
-      alert("ERROR");
-    }
   };
 
-  async function GET() {
-    const year = await fetch("/api/chart/TotalYear").then((t) => t.json());
-    setYear(year[0]);
-    const ocean = await fetch("/api/chart/ocean").then((t) => t.json());
-    setOcean(ocean);
-    const air = await fetch("/api/chart/AIM").then((t) => t.json());
-    setAir(air);
-  }
   useEffect(() => {
     !TOKEN && router.push("/login");
-    GET();
+    // Show the search result
+    // console.log(Re)
   }, []);
 
   const columnStyle = {
@@ -97,7 +51,6 @@ const Index = ({ Cookie, Re }) => {
       formatter: (cell) => <a href="#" style={{fontSize: '0.9em'}}>{cell}</a>,
       events: {
         onClick: (e, columns, columnIndex, row) => {
-          console.log(row.MASTER_TABLE);
           row.MASTER_TABLE == "T_OIMMAIN" &&
             router.push(
               `/forwarding/oim/[Detail]`,
@@ -255,11 +208,8 @@ const Index = ({ Cookie, Re }) => {
   if (TOKEN && TOKEN.group) {
     return (
       <Layout TOKEN={TOKEN} TITLE="FORWARDING">
-        <h3
-          className="mb-4"
-          style={{ fontFamily: "Roboto, sans-serif", fontWeight: "700" }}
-        >
-          Forwarding
+        <h3 className="mb-4 forwarding">
+          Forwarding Search
         </h3>
         {/* SERACH BAR */}
         <Row className="mb-4">
@@ -297,13 +247,13 @@ const Index = ({ Cookie, Re }) => {
         </Row>
         {/* SEARCH BAR END */}
         <Row>
-          {/* DISPLAY SEARCH RESULT */}
+          {/* DISPLAY SEARCH RESULT */}          
           <ToolkitProvider
-            keyField="RefNO"
+            keyField="RowNo"
             bordered={false}
             columns={column}
             wrapperClasses="table-responsive"
-            data={result || Re.ocean || []}
+            data={Re}
             exportCSV
             search
           >
@@ -325,108 +275,6 @@ const Index = ({ Cookie, Re }) => {
             )}
           </ToolkitProvider>
         </Row>
-
-        {/* <BootstrapTable
-          hover
-          striped
-          condensed
-          keyField="RefNO"
-          bordered={false}
-          columns={column}
-          noDataIndication={indication}
-          wrapperClasses="table-responsive"
-          data={result || Re.ocean || []}
-        /> */}
-
-        {/* <ul>
-                {result && result.map(ga=> <li key={ga.RefNO}>{ga.CUSTOMER}</li>)}
-           </ul> */}
-        {/* <Row className="mb-4">
-           <Col>
-             <Card style={{ padding: "5rem" }}>
-               <Button
-                 className="mr-2"
-                 style={{ borderRadius: 0 }}
-                 color="primary"
-                 onClick={() => router.push("/forwarding/ocean")}
-               >
-                 <i className="fa fa-ship"></i> OCEAN
-               </Button>
-               <h4 className="mt-4">Features</h4>
-               <p className="mb-2">
-                 모든 필드 검색 기능 - Search by keyword instead of columns
-               </p>
-               <p className="mb-2">
-                 수입 수출 - Ocean Import and Export available
-               </p>
-               <p className="mb-2">
-                 창고 배송 알람 이메일 전송 - Send ASN via E-mail
-               </p>
-               <p className="mb-2">
-                 폴더 커버 페이지 프린트 - Folder cover print
-               </p>
-               <p className="mb-2">
-                 AP 프린트 기능 - AP print with various type
-               </p>
-               <span className="mb-2">
-                 아시아 데이터 파일 입력중 - Asia excel file data imported{" "}
-                 <Spinner color="primary" size="sm" />
-               </span>
-               <span className="mb-2">
-                 고객과 직원들에게 보여지는 정보 조율{" "}
-                 <Spinner color="primary" size="sm" />
-               </span>
-             </Card>
-           </Col>
-           <Col>
-             <Card style={{ padding: "5rem" }}>
-               <Button
-                 className="mr-2"
-                 style={{ borderRadius: 0 }}
-                 color="primary"
-                 onClick={() => router.push("/forwarding/air")}
-                 disabled
-               >
-                 <i className="fa fa-plane"></i> AIR
-               </Button>
-               <h4 className="mt-4">Features</h4>
-               <span className="mb-2">
-                 데이터 베이스 정리 준비중 - Database Sorting{" "}
-                 <Spinner color="primary" size="sm" />
-               </span>
-             </Card>
-           </Col>
-           <Col>
-             <Card style={{ padding: "5rem" }}>
-               <Button
-                 style={{ borderRadius: 0 }}
-                 color="primary"
-                 onClick={() => router.push("/forwarding/trucking")}
-               >
-                 <i className="fa fa-truck"></i> TRUCK
-               </Button>
-               <h4 className="mt-4">Features</h4>
-               <p className="mb-2">
-                 Pricing Team 이상 관리자만 수정 가능할 수 있는 기능 -
-                 Authentication
-               </p>
-               <p className="mb-2">
-                 여러 트럭 업체 견적 전송 기능 - Send quotation to companies via
-                 E-mail
-               </p>
-               <p className="mb-2">업체 수정 기능 - EDIT trucking company</p>
-               <span className="mb-2">
-                 업체 추가 기능 - ADD trucking company{" "}
-                 <Spinner color="primary" size="sm" />
-               </span>
-             </Card>
-           </Col>
-         </Row> */}
-        <Row>
-          {Year && <YearChart Data={Year} />}
-          {Ocean && <OIM Data={Ocean} />}
-          {Air && <AIM Data={Air} />}
-        </Row>
         <style global jsx>
           {`
             @font-face {
@@ -436,11 +284,11 @@ const Index = ({ Cookie, Re }) => {
               font-weight: normal;
               font-style: normal;
             }
-            h4,
-            p,
-            span {
+            .forwarding {
               font-family: "NEXON Lv2 Gothic";
-              font-size: 0.9rem;
+            }
+            * {
+              font-family: "Roboto";
             }
             .page-link {
               border-radius: 0;
@@ -471,6 +319,7 @@ export async function getServerSideProps({ req, query }) {
   const cookies = cookie.parse(
     req ? req.headers.cookie || "" : window.document.cookie
   );
+  
   const fetchs = await fetch(
     `${process.env.BASE_URL}api/forwarding/freightStreamSearch`,
     {
@@ -479,12 +328,35 @@ export async function getServerSideProps({ req, query }) {
         name:
           cookies.jamesworldwidetoken &&
           jwt.decode(cookies.jamesworldwidetoken).username,
-        options: ["CUSTOMER", "MASTER_BLNO","CUSTOMER", "CONSIGNEE","SHIPPER","MASTER_BLNO","HOUSE_BLNO","RefNO",],
+        options: [
+          "CUSTOMER",
+          "MASTER_BLNO",
+          "CUSTOMER",
+          "CONSIGNEE",
+          "SHIPPER",
+          "MASTER_BLNO",
+          "HOUSE_BLNO",
+          "RefNO",
+        ],
       },
     }
   );
-  const result = await fetchs.json();
-  // console.log(result)
+  var result = [];
+  if (fetchs.status === 200) {
+    // Fetch result as array when successfully load data
+    result = await fetchs.json();
+  } else {
+    if(fetchs.status=== 400) {
+      // Fetch result as empty array
+      result = await fetchs.json();
+    } else {
+      // When error occurs, set the result as empty array
+      result = []
+    }
+  }
+  if(cookies.jamesworldwidetoken&& query.search!=undefined) {
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded forwarding/'+query.search)
+  }
   // Pass data to the page via props
   return { props: { Cookie: cookies, Re: result } };
 }

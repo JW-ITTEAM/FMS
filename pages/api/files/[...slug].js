@@ -59,7 +59,8 @@ export default async (req, res) => {
           res.status(200).json(files);
         } else {
             // IF NOT, THROW AN ERROR TO DISPLAY THE ERROR
-            console.log(`${Path} NOT EXIST`)
+            // console.log(`${Path} NOT EXIST`)
+            
             res.status(400).end(false);
         }
         //GET FILES FROM THE PATH (BASE PATH + QUERY PATH)

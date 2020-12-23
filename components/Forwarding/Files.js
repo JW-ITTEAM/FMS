@@ -99,7 +99,7 @@ export const Files = ({FilePath, FILE}) => {
                 <p>UPLOAD FILES</p>
               </div>
                 {files.length>0 && <Alert className="mt-2" color="warning">{files.length} File Uploaded Successfully</Alert>}
-    {fileRejections.length>0 && <Alert className="mt-2" color="danger">{fileRejections.length} File Upload Fail <br /> {fileRejections.map(ga=>(<span>{ga.file.path} - {ga.errors[0].message}<br /></span>))}</Alert>}
+    {fileRejections.length>0 && <Alert className="mt-2" color="danger">{fileRejections.length} File Upload Fail <br /> {fileRejections.map(ga=>(<span key={ga.file.path}>{ga.file.path} - {ga.errors[0].message}<br /></span>))}</Alert>}
               <aside className="mt-3">
                 <ul>{files}</ul>
               </aside>

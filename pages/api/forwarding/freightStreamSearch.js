@@ -23,14 +23,9 @@ export default async (req, res) => {
       try {
         // THROW ERROR IF THERE IS NO USER
         if (req.headers.name === undefined) throw new Error("PLEASE LOG IN");
-        // CREATE LOG HERE
-        console.log(
-          `${req.headers.name} ${
-            req.headers.query
-              ? `SEARCHED ${req.headers.query}`
-              : "LOADED FORWARDING"
-          }`
-        );
+        // IF THERE IS NO QUERY, RETURN EMPTY ARRAY
+        if(req.headers.query=="false") res.status(200).end([]);
+
         var Squery = `SELECT TOP 100 * FROM V_JWI_SEARCH WHERE MASTER_ID<>''`;
         const options = req.headers.options || false;
         var option;
@@ -49,15 +44,15 @@ export default async (req, res) => {
         let result = await pool.request().query(Squery);
         if (result.rowsAffected[0]) {
           // IF DATA EXISTS RETURN TRUE RESULT
-          const results = { result: true, ocean: result.recordsets[0] };
+          const results = result.recordsets[0];
           res.status(200).end(JSON.stringify(results));
           resolve();
         } else {
-          // IF DATA IS NOT EXIST RETURN FALSE RESULT
-          res.end(JSON.stringify({ result: false }));
+          // IF DATA IS NOT EXIST RETURN FALSE RESULT          
+          res.status(400).send([]);
         }
       } catch (err) {
-        return res.end(JSON.stringify(`${err}`));
+        res.status(501).send({message: `Error Occured ${JSON.stringify(err)}`})
       } finally {
         pool.close();
         resolve();

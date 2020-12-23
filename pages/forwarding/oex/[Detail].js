@@ -18,10 +18,11 @@ import { useEffect, useState } from "react";
 import Head from "../../../components/Forwarding/Head";
 import Main from "../../../components/Forwarding/Main";
 import Route from "../../../components/Forwarding/Route";
+import moment from 'moment'
 
 import jwt from 'jsonwebtoken'
 
-const Detail = ({ Cookie, OCEAN, FILE }) => {
+const Detail = ({ Cookie, OCEAN, FILE, EXTRA }) => {
   const router = useRouter()
   const TOKEN = jwt.decode(Cookie.jamesworldwidetoken)
   const [Master, setMaster] = useState(false)
@@ -41,15 +42,21 @@ const Detail = ({ Cookie, OCEAN, FILE }) => {
         setMaster(false)
     }
   });
+
+  const mailSubject = `[JW] ${OCEAN.H[0].CUSTOMER} MBL# ${OCEAN.M.F_MBLNo} HBL# ${OCEAN.H[0].F_HBLNo} CNTR# ${OCEAN.C && OCEAN.C.map(ga=>`${ga.F_ContainerNo}`)} ETD ${moment(OCEAN.M.F_ETD).utc().format('l')} ETA ${moment(OCEAN.M.F_ETA).utc().format('l')} // ${OCEAN.M.F_RefNo}`
+  const mailBody= `Dear ${OCEAN.H[0].CUSTOMER}
+  \nPlease note that there is an OCEAN SHIPMENT for ${OCEAN.H[0].CUSTOMER} scheduled to depart on ${moment(OCEAN.M.F_ETA).utc().format('LL')}.`
+  var emailHref = `mailto:?cc=${TOKEN&&TOKEN.email}&subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`
+
   if(TOKEN && TOKEN.group) {
   return (
     <>
       <Layout TOKEN={TOKEN} TITLE={Master.F_RefNo}>
         {Master ? (<Container fluid={true}>
-            <Head REF={Master.F_RefNo} POST={Master.F_PostDate} PIC={Master.F_U2ID}/>
+            <Head REF={Master.F_RefNo} POST={Master.F_PostDate} PIC={Master.F_U2ID} EMAIL={emailHref}/>
             <Row>
               <Col lg={10}>
-                  <Main TYPE="OCEAN" Master={Master} House={House} Containers={Containers} AP={AP} FILES={FILE} />
+                  <Main TYPE="OCEAN" Master={Master} House={House} Containers={Containers} AP={AP} FILES={FILE} USER={TOKEN} EXTRA={EXTRA} />
               </Col>
               <Col lg={2}>
                   <Route ETA={Master.F_ETA} ETD={Master.F_ETD} DISCHARGE={Master.F_Discharge||Master.F_DisCharge} LOADING={Master.F_LoadingPort} DEST={Master.F_FinalDest}/>
@@ -86,21 +93,28 @@ const Detail = ({ Cookie, OCEAN, FILE }) => {
 export async function getServerSideProps({req, query}) {
   const cookies = cookie.parse(req? req.headers.cookie || "" : window.document.cookie)
   
-  // FETCH FROM ** FREIGHT STREAM
+  // FETCH OEX DATA FROM FREIGHT STREAM
   const FETCH = await fetch(`${process.env.BASE_URL}api/forwarding/oceanDetail`, {headers: {reference: query.Detail, import: 0}})
   const FJSON = await FETCH.json();
 
+  // FETCH FILE DATA FROM SYNOLOGY
   const Fetch = await fetch(`${process.env.BASE_URL}api/files/FORWARDING/${query.Detail}`)
   var Files=null;
   if(Fetch.status===200) {
     Files = await Fetch.json()
+  }
+  // FETCH EXTRA DATA FROM FMS
+  const EX_Fetch = await fetch(`${process.env.BASE_URL}api/forwarding/getExtra`, {headers: {ref: query.Detail}})
+  var Extra=null;
+  if(EX_Fetch.status==200) {
+    Extra = await EX_Fetch.json()
   }
 
   //LOG
   if(cookies.jamesworldwidetoken) {
     console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED FORWARDING/OCEAN/'+query.Detail)
   }
-  return { props: { Cookie: cookies, OCEAN: FJSON, FILE: Files } };
+  return { props: { Cookie: cookies, OCEAN: FJSON, FILE: Files, EXTRA: Extra } };
 }
 
 export default Detail;
