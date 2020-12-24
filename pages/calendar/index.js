@@ -22,7 +22,6 @@ const Index = ({Cookie}) => {
     }])
 
     const [addModal, setAddModal] = React.useState(false);
-    const [files, setFiles] = React.useState([]);
     const addToggle = () => {
         setAddModalInfo([])
         setAddModal(!addModal);
@@ -44,24 +43,6 @@ const Index = ({Cookie}) => {
         addToggle()
     }
 
-    const onFileChange = async(e) => {
-      // const Upload = await fetch('api/files/NEW_PATH/PDFS.pdf', {
-      //   method: 'POST',
-      //   body: e.target.files[0]
-      // })
-      // console.log(Upload)
-      console.log(e.target.files[0])
-      const formData = new FormData()
-      formData.append('file',e.target.files[0])
-      const config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      }
-      const upload = new Promise((res, rej)=>res(post('api/file/upload', formData, config)))
-      upload.then(ga=> console.log(ga))
-    }
-
    useEffect(()=>{
      !TOKEN && router.push("/login");
      const title=`New message from ${TOKEN.username}`
@@ -70,7 +51,9 @@ const Index = ({Cookie}) => {
         body: 'Hey there! You\'ve been notified!',
         sound: 'sounds/message.mp3'
      }
-     console.log(Notification.permission)
+
+    // THIS IS NOTIFICATION FOR CHROME - NOT COMPATABLE WITH OTHER FORMAT
+    //  console.log(Notification.permission)
     //  if(Notification.permission !='granted') Notification.requestPermission();
     //  else  {
     //     new Notification(title, option);
@@ -84,10 +67,8 @@ const Index = ({Cookie}) => {
            <Row>
              <Col>
              <h3 style={{ fontFamily: "Roboto, sans-serif", fontWeight: "700" }}>
-           Calendar <span className="text-secondary">Under Development</span>
-         </h3>
-         <a href="http://ryan:rladuswls1@192.168.1.3:5005/IT/JAMESWORLDWIDE_WEB/NEW_PATH/PDFS.pdf" target="_blank"><p>DOWNLOAD</p></a>
-         <Input name="file1" type="file" onChange={e=>onFileChange(e)} />
+                Calendar <span className="text-secondary">Under Development</span>
+             </h3>
            <Calendar
              selectable
              style={{padding: '4rem'}}
@@ -789,7 +770,7 @@ const Index = ({Cookie}) => {
 export async function getServerSideProps({req}) {
     const cookies = cookie.parse(req? req.headers.cookie || "" : window.document.cookie)
 
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED CALENDAR')
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded calendar')
     // Pass data to the page via props
     return { props: { Cookie: cookies } };
   }

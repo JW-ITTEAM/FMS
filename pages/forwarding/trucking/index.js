@@ -282,7 +282,7 @@ export async function getServerSideProps({req}) {
   
   //LOG
   if(cookies.jamesworldwidetoken) {
-  console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED FORWARDING/TRUCKING')
+  console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded forwarding/trucking')
   }
   return { props: { Cookie: cookies } };
 }

@@ -29,7 +29,6 @@ const Detail = ({ Cookie, OCEAN, FILE, EXTRA }) => {
   const [House, setHouse] = useState(false)
   const [Containers, setContainer] = useState(false)
   const [AP, setAP] = useState(false)
-
   
   useEffect(() => {
     !TOKEN && router.push("/login");
@@ -39,7 +38,7 @@ const Detail = ({ Cookie, OCEAN, FILE, EXTRA }) => {
         setContainer(OCEAN.C)
         setAP(OCEAN.A)
         // console.log(TOKEN)
-        // console.log(OCEAN)
+        console.log(OCEAN)
     } else {
         setMaster(false)
     }
@@ -110,7 +109,7 @@ export async function getServerSideProps({req, query}) {
   var Extra=null;
   if(EX_Fetch.status==200) {
     Extra = await EX_Fetch.json()
-    console.log(Extra)
+    // console.log(Extra)
   }
 
   //LOG

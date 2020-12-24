@@ -19,7 +19,7 @@ const Head = ({ REF, POST, PIC, EMAIL }) => {
       <>
         <Row>
           <Col>
-            <h2>{REF}</h2>
+            <h2 style={{fontFamily: "Roboto"}}>{REF}</h2>
             <Button
               className="mr-2"
               size="sm"
@@ -90,15 +90,21 @@ const Head = ({ REF, POST, PIC, EMAIL }) => {
                   marginBottom: "0.5rem",
                 }}
               >
-                PIC: {PIC}
+                PIC: {PIC.toUpperCase()}
               </Badge>
             )}
-            <p style={{ fontSize: "0.7em" }}>
-              Function - Send data to Google Calendar
+            <p style={{ fontSize: "0.7em", marginBottom: '0.2rem' }}>
+              MAIL: Send data to (Outlook / Gmail), POST DATE: Set date to Google Calendar
             </p>
           </Col>
         </Row>
         <hr />
+        <style jsx>{`
+          h2, a, span, p {
+            font-family: 'roboto';
+            font-weight: 1000;
+          }
+          `}</style>
       </>
     );}
 export default Head;

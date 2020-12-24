@@ -164,7 +164,7 @@ const Sidebar = ({level}) => {
             </NavText>
           </NavItem>
 
-          <NavItem eventKey="warehouse">
+          <NavItem eventKey="warehouse/staff">
           <NavIcon style={mobile?mobileIcon:desktopIcon}>
               <i
                 className="fa fa-fw fa-industry"
@@ -175,22 +175,21 @@ const Sidebar = ({level}) => {
                 }}
               />
             </NavIcon>
-            <NavText
+            {/* <NavText
               style={TextStyle}
               title="WAREHOUSE"
             >
               WAREHOUSE
-            </NavText>
-            <NavItem eventKey="warehouse/staff">
-              <NavText title="STAFF">
+            </NavText> */}
+            
+              <NavText style={TextStyle} title="STAFF">
                 STAFF
               </NavText>
-            </NavItem>
-            <NavItem eventKey="warehouse/staff/summary">
+            {/* <NavItem eventKey="warehouse/staff/summary">
               <NavText title="STAFF SUMMARY">
                 STAFF SUMMARY
               </NavText>
-            </NavItem>
+            </NavItem> */}
             {/* <NavItem eventKey="warehouse/order">
               <NavText title="ORDER" style={{ color: "#a9a9a9" }}>
                 ORDER

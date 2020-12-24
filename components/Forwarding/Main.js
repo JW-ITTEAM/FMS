@@ -176,8 +176,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
             >{({ url }) => (
               <a href={url} target="_blank">
                 <Badge
-                  className="mt-2 mr-2 text-secondary"
-                  style={{backgroundImage:"linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"}}
+                  className="mt-2 mr-2 text-white text-wrap" style={{fontSize: '0.7rem'}}
                 >
                   <i className="fa fa-file"></i><span className="ml-2">AP_{ga.PAY}</span>
                 </Badge>
@@ -189,31 +188,6 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
         </Row>
       </>
     );
-
-    const Mail = () => (
-      <>
-      <hr />
-        <Row>
-          <Col sm="3">
-            <span className="text-warning">
-              <span className="fa-stack">
-                <i className="fa fa-circle fa-stack-2x text-warning"></i>
-                <i className="fa fa-envelope fa-stack-1x fa-inverse"></i>
-              </span>
-              Mail
-            </span>
-          </Col>
-          <Col sm="9" className="pt-1">
-            <ButtonGroup className="pr-3">
-              <Button size="sm" outline color="warning">PRE-ALERT</Button>
-              <Button size="sm" outline color="warning">REPORT</Button>
-              <Button size="sm" outline color="warning">ASN</Button>
-            </ButtonGroup>
-          </Col>
-        </Row>
-      </>
-    );
-
 
     if(TYPE=="OCEAN") {
       const MASTER1 = [
@@ -237,7 +211,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
           <Col lg={6}>
             <Row>
               <Col sm="12">
-                <Table className="table-borderless mt-2 table-sm">
+                <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.85rem'}}>
                   <tbody>
                     {MASTER1.map((ga) => (
                       <tr key={ga.title} className="">
@@ -248,7 +222,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                   </tbody>
                 </Table>
                 <hr />
-                <Table className="table-borderless mt-2 table-sm">
+                <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.85rem'}}>
                   <tbody>
                     {MASTER2.map((ga) => (
                       <tr key={ga.title} className="">
@@ -260,7 +234,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                 </Table>
               </Col>
               <Col sm="12">
-                {/* <Print House={House} Master={Master} /> */}
+                <Print House={House} Master={Master} />
                 {/* <Mail /> */}
                 <Files FilePath={Master.F_RefNo} FILE={FILES} />
               </Col>
@@ -270,78 +244,9 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
           {/* HOUSE */}
           <Col lg={6}>
             {House &&
-              House.map((ga, i) =>{
-                if(i<2) {
-                  return(
-                    <Card
-                  key={ga.F_ID}
-                  style={{ borderRadius: 0 }}
-                  className="px-3 mb-2 pt-2"
-                >
-                  <CardHeader
-                    style={{ backgroundColor: "#fff" }}
-                    className="text-success py-1"
-                  >
-                    <Row className="py-0">
-                      <Col sm="10">
-                        House
-                      </Col>
-                      <Col>
-                      {House.length>2 && i===0&&<Button color="success" size="sm" onClick={houseToggle} style={{borderRadius: '0'}}>Show More</Button>}
-                      </Col>
-                    </Row>
-                  </CardHeader>
-                  <Table className="table-borderless mt-2 table-sm">
-                    <tbody>
-                      <tr>
-                        <th className="text-success">HBL</th>
-                        <th className="text-secondary">{ga.F_HBLNo}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">CUSTOMER</th>
-                        <th className="text-secondary">{ga.CUSTOMER}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">SHIPPER</th>
-                        <th className="text-secondary">{ga.SHIPPER}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">CONSIGNEE</th>
-                        <th className="text-secondary">{ga.CONSIGNEE}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">NOTIFY</th>
-                        <th className="text-secondary">{ga.NOTIFY}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">COMMODITY</th>
-                        <th className="text-secondary">{ga.F_Commodity}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">PKG</th>
-                        <th className="text-secondary">{ga.F_MarkPkg}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">KGS</th>
-                        <th className="text-secondary">{ga.F_KGS}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-success">CBM</th>
-                        <th className="text-secondary">{ga.F_CBM}</th>
-                      </tr>                      
-                      <tr>
-                        <th className="text-success">REFERENCE</th>
-                        <th className="text-secondary">
-                          {ga.F_CustRefNo || "NO REFERENCE"}
-                        </th>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Card>
-                  )
-                } else {
+              House.map((ga, i) => {
+                if (i < 2) {
                   return (
-                    <Collapse isOpen={isHouseOpen}>
                     <Card
                       key={ga.F_ID}
                       style={{ borderRadius: 0 }}
@@ -351,13 +256,24 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                         style={{ backgroundColor: "#fff" }}
                         className="text-success py-1"
                       >
-                        <Row>
+                        <Row className="py-0">
+                          <Col sm="9">House</Col>
                           <Col>
-                            House
+                            {House.length > 2 && i === 0 && (
+                              <Button
+                                color="success mt-0 mb-1"
+                                size="sm"
+                                onClick={houseToggle}
+                                style={{ borderRadius: "0" }}
+                                outline
+                              >
+                                Show More
+                              </Button>
+                            )}
                           </Col>
                         </Row>
                       </CardHeader>
-                      <Table className="table-borderless mt-2 table-sm">
+                      <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.8rem'}}>
                         <tbody>
                           <tr>
                             <th className="text-success">HBL</th>
@@ -389,28 +305,140 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                           </tr>
                           <tr>
                             <th className="text-success">KGS</th>
-                            <th className="text-secondary">{ga.F_KGS}</th>
+                            <th className="text-secondary">{numberWithCommas(ga.F_KGS)}</th>
                           </tr>
                           <tr>
                             <th className="text-success">CBM</th>
-                            <th className="text-secondary">{ga.F_CBM}</th>
-                          </tr>                      
+                            <th className="text-secondary">{numberWithCommas(ga.F_CBM)}</th>
+                          </tr>
                           <tr>
                             <th className="text-success">REFERENCE</th>
                             <th className="text-secondary">
                               {ga.F_CustRefNo || "NO REFERENCE"}
                             </th>
                           </tr>
+                          {Containers.map(ele=>{
+                                if(ele.F_OIHBLID==ga.F_ID) 
+                                  return(
+                                    <>
+                                    <tr key={ele.F_ID}>
+                                      <th className="text-primary">CONTAINER</th>
+                                      <th className="text-secondary">{ele.F_ContainerNo}</th> 
+                                    </tr>
+                                    <tr>
+                                      <th className="text-primary">TYPE</th>
+                                      <th className="text-secondary">{ele.F_ConType}</th> 
+                                    </tr>
+                                    <tr>
+                                      <th className="text-primary">KGS</th>
+                                      <th className="text-secondary">{numberWithCommas(ele.F_KGS)}</th> 
+                                    </tr>
+                                    <tr>
+                                      <th className="text-primary">PKG</th>
+                                      <th className="text-secondary">{numberWithCommas(ga.F_PKGS) || numberWithCommas(ga.F_Pkgs)}</th> 
+                                    </tr>
+                                    </>
+                                  )
+                          })}
                         </tbody>
                       </Table>
                     </Card>
+                  );
+                } else {
+                  return (
+                    <Collapse isOpen={isHouseOpen}>
+                      <Card
+                        key={ga.F_ID}
+                        style={{ borderRadius: 0 }}
+                        className="px-3 mb-2 pt-2"
+                      >
+                        <CardHeader
+                          style={{ backgroundColor: "#fff" }}
+                          className="text-success py-1"
+                        >
+                          <Row>
+                            <Col>House</Col>
+                          </Row>
+                        </CardHeader>
+                        <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.8rem'}}>
+                          <tbody>
+                            <tr>
+                              <th className="text-success">HBL</th>
+                              <th className="text-secondary">{ga.F_HBLNo}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">CUSTOMER</th>
+                              <th className="text-secondary">{ga.CUSTOMER}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">SHIPPER</th>
+                              <th className="text-secondary">{ga.SHIPPER}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">CONSIGNEE</th>
+                              <th className="text-secondary">{ga.CONSIGNEE}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">NOTIFY</th>
+                              <th className="text-secondary">{ga.NOTIFY}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">COMMODITY</th>
+                              <th className="text-secondary">
+                                {ga.F_Commodity}
+                              </th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">PKG</th>
+                              <th className="text-secondary">{ga.F_MarkPkg}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">KGS</th>
+                              <th className="text-secondary">{ga.F_KGS}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">CBM</th>
+                              <th className="text-secondary">{ga.F_CBM}</th>
+                            </tr>
+                            <tr>
+                              <th className="text-success">REFERENCE</th>
+                              <th className="text-secondary">
+                                {ga.F_CustRefNo || "NO REFERENCE"}
+                              </th>
+                            </tr>
+                            {Containers.map(ele=>{
+                                if(ele.F_OIHBLID==ga.F_ID) 
+                                  return(
+                                    <>
+                                    <tr key={ele.F_ID}>
+                                      <th className="text-primary">CONTAINER</th>
+                                      <th className="text-secondary">{ele.F_ContainerNo}</th> 
+                                    </tr>
+                                    <tr>
+                                      <th className="text-primary">TYPE</th>
+                                      <th className="text-secondary">{ele.F_ConType}</th> 
+                                    </tr>
+                                    <tr>
+                                      <th className="text-primary">KGS</th>
+                                      <th className="text-secondary">{numberWithCommas(ele.F_KGS)}</th> 
+                                    </tr>
+                                    <tr>
+                                      <th className="text-primary">PKG</th>
+                                      <th className="text-secondary">{numberWithCommas(ga.F_PKGS) || numberWithCommas(ga.F_Pkgs)}</th> 
+                                    </tr>
+                                    </>
+                                  )
+                          })}
+                          </tbody>
+                        </Table>
+                      </Card>
                     </Collapse>
-                  )
+                  );
                 }
-              } 
-              )}
+              })}
             {/* CONTAINER */}
-            {Containers && Containers[0].F_ContainerNo &&
+            {/* {Containers &&
+              Containers[0].F_ContainerNo &&
               Containers.map((ga) => (
                 <Card
                   key={ga.F_ID}
@@ -421,17 +449,13 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                     style={{ backgroundColor: "#fff" }}
                     className="text-warning py-1"
                   >
-                    CONTAINER
+                    Container
                   </CardHeader>
-                  <Table className="table-borderless mt-2 table-sm">
+                  <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.8rem'}}>
                     <tbody>
                       <tr>
                         <th className="text-warning">CONTAINER</th>
                         <th className="text-secondary">{ga.F_ContainerNo}</th>
-                      </tr>
-                      <tr>
-                        <th className="text-warning">TYPE</th>
-                        <th className="text-secondary">{ga.F_ConType}</th>
                       </tr>
                       <tr>
                         <th className="text-warning">TYPE</th>
@@ -448,29 +472,52 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                         </th>
                       </tr>
                       <tr>
-                        <th className="text-warning">SEAL NUMBER</th>
-                        <th className="text-secondary">{ga.F_SealNo}</th>
+                        <th className="text-warning">F_OIHBLID</th>
+                        <th className="text-secondary">
+                          {ga.F_OIHBLID}
+                        </th>
                       </tr>
                     </tbody>
                   </Table>
                 </Card>
-              ))}
+              ))} */}
           </Col>
           <Col sm="12">
-            <Activity REF={Master.F_RefNo} USER={USER} EXTRA={EXTRA}/>
+            <Activity REF={Master.F_RefNo} USER={USER} EXTRA={EXTRA} />
           </Col>
+
+          <style global jsx>
+            {`
+              @font-face {
+                font-family: "NEXON Lv2 Gothic";
+                src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff")
+                  format("woff");
+                font-weight: normal;
+                font-style: normal;
+              }
+              * {
+                font-family: "NEXON Lv2 Gothic";
+              }
+              .alert button {
+                padding-top: "1rem" !important;
+                padding-bottom: "1rem";
+              }
+              table > th {
+                font-weight: 1000;
+              }
+            `}
+          </style>
         </Row>
       );
     } else {
       if(TYPE=="AIR") {
         // MASTER
         const AIR_M_SCH = [
-          { title: "CUSTOMER", data: 'UNKNOWN' },
+          { title: "CUSTOMER", data: House[0].CUSTOMER },
           { title: "MAWB", data: Master.F_MawbNo },
           { title: "FLIGHT", data: <a target='_blank' href={`http://www.google.com/search?q=${Master.F_FLTno||Master.F_FLTNo}`}>{Master.F_FLTno||Master.F_FLTNo}</a> },
           { title: "WEIGHT", data: Master.F_GrossWeight },
           { title: "PKGS", data: `${Master.F_Pkgs}` },
-          { title: "PIC", data: Master.F_U1ID.toUpperCase() },
           { title: "UPDATE", data: moment(Master.F_U1Date).utc().format("lll") },
         ]
         return (
@@ -587,6 +634,20 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
             </Col>
             <style global jsx>
               {`
+                  @font-face {
+                  font-family: "NEXON Lv2 Gothic";
+                  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff")
+                    format("woff");
+                  font-weight: normal;
+                  font-style: normal;
+                }
+                * {
+                  font-family: 'NEXON Lv2 Gothic';
+                }
+                .alert button {
+                  padding-top: "1rem" !important;
+                  padding-bottom: "1rem";
+                }
                 table > th {
                   font-weight: 1000;
                 }
@@ -667,12 +728,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                       {({ url }) => (
                         <a href={url} target="_blank">
                           <Badge
-                            className="mt-2 mr-2"
-                            style={{
-                              backgroundImage:
-                                "radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%)",
-                              borderRadius: '0'
-                            }}
+                            className="mt-2 mr-2 text-white text-wrap" style={{fontSize: '0.7rem'}}
                           >
                             <i className="fa fa-file"></i>
                             <span className="ml-2">AP_{ga.PAY}</span>
@@ -691,6 +747,16 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
             </Col>
             <style global jsx>
               {`
+                  @font-face {
+                  font-family: "NEXON Lv2 Gothic";
+                  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff")
+                    format("woff");
+                  font-weight: normal;
+                  font-style: normal;
+                }
+                * {
+                  font-family: 'NEXON Lv2 Gothic';
+                }
                 .alert button {
                   padding-top: "1rem" !important;
                   padding-bottom: "1rem";

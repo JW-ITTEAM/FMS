@@ -52,12 +52,12 @@ const Route = ({ ETD, ETA, FETA, LOADING, DISCHARGE, DEST }) => {
             </span>
           </Col>
           <Col className="mt-1" sm="10">
-            <p className="text-center">
+            <p className="text-center" style={{fontSize: '0.8rem'}}>
               <span>{LOADING}</span>
             </p>
             {ETD && 
             <>
-            <p className="text-center">
+            <p className="text-center" style={{fontSize: '0.8rem'}}>
               <span className="text-secondary">
                 {moment(ETD).add(1, "days").format("LL")}{" "}
               </span>
@@ -106,11 +106,11 @@ const Route = ({ ETD, ETA, FETA, LOADING, DISCHARGE, DEST }) => {
             </span>
           </Col>
           <Col>
-            <p className="text-center">
+            <p className="text-center" style={{fontSize: '0.8rem'}}>
               <span>{DISCHARGE}</span>
             </p>
             
-            <p className="text-center">
+            <p className="text-center" style={{fontSize: '0.8rem'}}>
               <span className="text-secondary">
                 {moment(ETA).add(1, "days").format("LL")}{" "}
               </span>
@@ -140,11 +140,11 @@ const Route = ({ ETD, ETA, FETA, LOADING, DISCHARGE, DEST }) => {
             </span>
                 </Col>
                 <Col>
-                <p className="text-center">
+                <p className="text-center" style={{fontSize: '0.8rem'}}>
               <span>{DEST}</span>
             </p>
             
-            {FETA&&<p className="text-center">
+            {FETA&&<p className="text-center" style={{fontSize: '0.8rem'}}>
               <span className="text-secondary">
                 {moment(FETA).add(1, "days").format("LL")}{" "}
               </span>

@@ -545,7 +545,7 @@ export async function getServerSideProps({req}) {
         Data1 = false
     }
 
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED STAFF')
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded warehouse/staff')
     // Pass data to the page via props
     return { props: { Cookie: cookies, Staff: Data, Work: Data1 } };
   }

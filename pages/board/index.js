@@ -51,7 +51,7 @@ const Index = ({Cookie, Board}) => {
         style: {fontFamily: "NEXON Lv2 Gothic"},
         align: 'center',
         headerAlign: 'center',
-        formatter: (cell)=>(moment.utc(cell).calendar()),
+        formatter: (cell)=>(moment(cell).utc().format('LLL')),
       },
    ]
 
@@ -90,11 +90,12 @@ const Index = ({Cookie, Board}) => {
                <p>익명 사내 게시판</p>
                <p className="text-center text-primary">익명 사내 게시판은 직원 간의 정보 공유 목적 / 기업문화 개선 제안 목적 / 고민 상담 목적으로 만들어졌습니다</p>
                <p className="text-center">게시판 주의사항: 험담 금지, 칭찬 환영, 삭제 및 수정 불가</p>
+               <a style={{ position: "fixed", right: "2rem", top: "2rem", color: '#4582ec' }} onClick={() => setModal(true)}>
+                <span>작성하기</span>
                <i
-                 className="fa fa-edit fa-lg"
-                 style={{ position: "fixed", right: "2rem", top: "2rem", color: '#4582ec' }}
-                 onClick={() => setModal(true)}
+                 className="fa fa-edit fa-lg ml-2"
                ></i>
+               </a>
              </Col>
              <Modal isOpen={modal} toggle={toggle} size="lg">
                <ModalHeader
@@ -163,7 +164,9 @@ export async function getServerSideProps({req}) {
     const Fetch = await fetch(`${process.env.BASE_URL}api/board/getPost`)
     const Data = await Fetch.json()
 
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED BOARD')
+    if(cookies.jamesworldwidetoken) {
+      console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded board')
+    }
     // Pass data to the page via props
     return { props: { Cookie: cookies, Board: Data } };
   }

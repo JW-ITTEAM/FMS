@@ -70,9 +70,9 @@ export const Activity = ({REF, USER, EXTRA}) => {
     useEffect(() => {
       console.log(EXTRA)
       if(EXTRA.S!=null) {
-        setLast(moment(EXTRA.F_LastFreeDate).utc().format('yyyy-MM-DD'))
-        setPicked(moment(EXTRA.F_PickedUpDate).utc().format('yyyy-MM-DD'))
-        setEmpty(moment(EXTRA.F_EmptyReturnDate).utc().format('yyyy-MM-DD'))
+        EXTRA.F_LastFreeDate && setLast(moment(EXTRA.F_LastFreeDate).utc().format('yyyy-MM-DD'))
+        EXTRA.F_PickedUpDate && setPicked(moment(EXTRA.F_PickedUpDate).utc().format('yyyy-MM-DD'))
+        EXTRA.F_EmptyReturnDate && setEmpty(moment(EXTRA.F_EmptyReturnDate).utc().format('yyyy-MM-DD'))
         setC1(EXTRA.S.F_PreAlert==="1"?true:false)
         setC2(EXTRA.S.F_ISF==="1"? true: false)
         setC3(EXTRA.S.F_OBL==="1"? true: false)
@@ -104,9 +104,8 @@ export const Activity = ({REF, USER, EXTRA}) => {
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === "1" })}
-                  onClick={() => {
-                    toggle("1");
-                  }}
+                  onClick={() => {toggle("1")}}
+                  style={{fontSize: '0.8rem'}}
                 >
                   Comment
                 </NavLink>
@@ -117,6 +116,7 @@ export const Activity = ({REF, USER, EXTRA}) => {
                   onClick={() => {
                     toggle("2");
                   }}
+                  style={{fontSize: '0.8rem'}}
                 >
                   Status
                 </NavLink>
@@ -129,7 +129,8 @@ export const Activity = ({REF, USER, EXTRA}) => {
             <TabPane tabId="1">
               <Row style={{ display: "block", width: "100%" }}>
                 <Card body style={{ borderRadius: "0" }}>
-                  {UpdatedComment.map(ga=>(
+                  {UpdatedComment.length>0 ? 
+                  (UpdatedComment.map(ga=>(
                     <div style={{
                       margin: ".5em 0 0",
                       border: "none",
@@ -170,14 +171,17 @@ export const Activity = ({REF, USER, EXTRA}) => {
                           color: "gray",
                         }}
                       >
-                        <div>{moment(ga.F_Date).utc().add(1, 'days').calendar()}</div>
+                        <div>{moment(ga.F_Date).utc().calendar()}</div>
                       </div>
                       <div className="text" style={{ marginTop: "0.6em" }}>
                         {ga.F_Content}
                       </div>
                     </div>
                     </div>
-                  ))}
+                  ))): (
+                    <div className="text-center" style={{fontSize: '0.8rem'}}><span>NO COMMENT</span></div>
+                  )}
+                
                   <InputGroup className="pt-4">
                     <Input
                       onChange={(e) => setComment(e.target.value)}
@@ -204,7 +208,7 @@ export const Activity = ({REF, USER, EXTRA}) => {
             </TabPane>
             <TabPane tabId="2">
               <Row style={{ width: "100%" }}>
-                <Col sm="6">
+                <Col sm="9">
                   <Card body style={{ borderRadius: "0" }}>
                     <span className="text-success">
                       <span className="fa-stack">
@@ -215,50 +219,53 @@ export const Activity = ({REF, USER, EXTRA}) => {
                     </span>
                     <InputGroup size="sm" className="mt-4 mb-2">
                       <InputGroupAddon addonType="prepend">
-                        Last Free Day
+                        <InputGroupText style={{fontSize: '0.8rem'}}>Last Free Day</InputGroupText>
                       </InputGroupAddon>
                       <Input
                         type="date"
                         name="date"
                         id="lastfree"
                         placeholder="date placeholder"
-                        value={Last}
+                        value={Last?Last:""}
                         onChange={(e) => updateCalendar("last", e.target.value)}
+                        style={{fontSize: '0.8rem'}}
                       />
                     </InputGroup>
                     <InputGroup size="sm" className="my-2">
                       <InputGroupAddon addonType="prepend">
-                        Picked Up Date
+                        <InputGroupText style={{fontSize: '0.8rem'}}>Picked Up Date</InputGroupText>
                       </InputGroupAddon>
                       <Input
                         type="date"
                         name="date"
                         id="picked"
-                        value={Picked}
+                        value={Picked?Picked:""}
                         placeholder="date placeholder"
                         onChange={(e) =>
                           updateCalendar("picked", e.target.value)
                         }
+                        style={{fontSize: '0.8rem'}}
                       />
                     </InputGroup>
                     <InputGroup size="sm" className="my-2">
                       <InputGroupAddon addonType="prepend">
-                        Empty Return Date
+                        <InputGroupText style={{fontSize: '0.8rem'}}>Empty Return Date</InputGroupText>
                       </InputGroupAddon>
                       <Input
                         type="date"
                         name="date"
                         id="empty"
-                        value={Empty}
+                        value={Empty?Empty:""}
                         placeholder="date placeholder"
                         onChange={(e) =>
                           updateCalendar("empty", e.target.value)
                         }
+                        style={{fontSize: '0.8rem'}}
                       />
                     </InputGroup>
                   </Card>
                 </Col>
-                <Col sm="6">
+                <Col sm="3">
                   <Card body style={{ borderRadius: "0" }}>
                     <FormGroup>
                       <span className="text-success">
@@ -268,7 +275,7 @@ export const Activity = ({REF, USER, EXTRA}) => {
                         </span>
                         STATUS
                       </span>
-                      <div className="mt-4">
+                      <div className="mt-4" style={{fontSize: '1rem'}}>
                         <CustomInput
                           type="switch"
                           id="exampleCustomSwitch"
@@ -379,6 +386,7 @@ export const Activity = ({REF, USER, EXTRA}) => {
                               updateStatus(6, 0);
                             }
                           }}
+                          style={{verticalAlign: 'middle'}}
                         />
                       </div>
                     </FormGroup>

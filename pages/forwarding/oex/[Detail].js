@@ -37,7 +37,7 @@ const Detail = ({ Cookie, OCEAN, FILE, EXTRA }) => {
         setHouse(OCEAN.H)
         setContainer(OCEAN.C)
         setAP(OCEAN.A)
-        // console.log(OCEAN)
+        console.log(OCEAN)
     } else {
         setMaster(false)
     }
@@ -112,7 +112,7 @@ export async function getServerSideProps({req, query}) {
 
   //LOG
   if(cookies.jamesworldwidetoken) {
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED FORWARDING/OCEAN/'+query.Detail)
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded forwarding/oex/'+query.Detail)
   }
   return { props: { Cookie: cookies, OCEAN: FJSON, FILE: Files, EXTRA: Extra } };
 }

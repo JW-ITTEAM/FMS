@@ -107,7 +107,7 @@ export async function getServerSideProps({req, query}) {
   }
   //LOG
   if(cookies.jamesworldwidetoken) {
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+` LOADED FORWARDING/AEX/`+query.Detail)
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+` loaded forwarding/aex/`+query.Detail)
   }
   return { props: { Cookie: cookies, AIR: FJSON, FILE: Files, EXTRA: Extra } };
 }

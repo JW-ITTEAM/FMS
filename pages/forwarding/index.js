@@ -34,7 +34,6 @@ const Index = ({ Cookie, Re }) => {
 
   useEffect(() => {
     !TOKEN && router.push("/login");
-    // Show the search result
     // console.log(Re)
   }, []);
 
@@ -354,8 +353,8 @@ export async function getServerSideProps({ req, query }) {
       result = []
     }
   }
-  if(cookies.jamesworldwidetoken&& query.search!=undefined) {
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded forwarding/'+query.search)
+  if(cookies.jamesworldwidetoken) {
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+` loaded forwarding${Object.keys(query).length? "/"+query.search : ""}`)
   }
   // Pass data to the page via props
   return { props: { Cookie: cookies, Re: result } };

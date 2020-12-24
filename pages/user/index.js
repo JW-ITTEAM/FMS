@@ -70,361 +70,405 @@ const Index = ({Cookie, User}) => {
            </Col>
          </Row>
          <Row>
-           <Col className="mb-2">
+           {/* Employee Contact Information COLUMN */}
+           <Col>
              <Card style={{ backgroundColor: "transparent" }}>
-               <Row className="mt-4 ml-4">
-                 <Col>
-                   <h4>Profile</h4>
-                   <p>프로필</p>
-                   <Button
-                     outline
-                     style={{
-                       borderRadius: 0,
-                       position: "absolute",
-                       right: "2rem",
-                       top: "0",
-                     }}
-                     onClick={updatePass}
-                   >
-                     Save
-                   </Button>
-                   <form>
-                     <Row>
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           FIRST NAME
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           defaultValue={TOKEN.first}
-                           onChange={(e) => console.log(e.target.value)}
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                     <Row>
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           LAST NAME
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           value={TOKEN.last}
-                           onChange={(e) => console.log(e.target.value)}
-                           placeholder="NAME"
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                     <Row>
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           USER NAME
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           value={TOKEN.username.toUpperCase()}
-                           disabled
-                           onChange={(e) => console.log(e.target.value)}
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                     <Row>
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           PASSWORD
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           type="password"
-                           placeholder="PASSWORD"
-                           autoComplete="on"
-                           onChange={(e) => setPassword(e.target.value)}
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                     <Row className="mt-4">
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           EXTENSION
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           disabled={true}
-                           onChange={(e) => console.log(e.target.value)}
-                           defaultValue={TOKEN.group}
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                     <Row>
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           EMAIL
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           disabled={true}
-                           onChange={(e) => console.log(e.target.value)}
-                           defaultValue={TOKEN.email.toUpperCase()}
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                     <Row>
-                       <Col sm="2">
-                         <label
-                           style={{ marginTop: "0.6em", fontSize: "0.8rem" }}
-                         >
-                           COMPANY
-                         </label>
-                       </Col>
-                       <Col>
-                         <Input
-                           disabled={true}
-                           onChange={(e) => console.log(e.target.value)}
-                           defaultValue="JAMES WORLDWIDE, INC"
-                           style={{
-                             backgroundColor: "transparent",
-                             border: "none",
-                             fontSize: "0.8rem",
-                           }}
-                         />
-                       </Col>
-                     </Row>
-                   </form>
-                 </Col>
-               </Row>
-             </Card>
-             </Col>
-             <Col>
-             <Card style={{ backgroundColor: "transparent" }}>
-               <Row className="mx-4 my-4">
+               <Row className="mx-4 mt-4">
                  <Col>
                    <h4>Employee Contact Information</h4>
                    <p>직원 연락망</p>
                  </Col>
                </Row>
-               <Row className="mx-4">
+               <Row className="mx-2">
                  <Col>
-                 <p>메인 전화번호: 562-924-0800</p>
-                 <div className="table-responsive">
-                   <Table size="sm" bordered className="text-center">
-                     <thead>
-                       <tr style={{fontSize: '0.9rem'}}>
-                         <th>FIRST NAME</th>
-                         <th>LAST NAME</th>
-                         <th>EXTENSION #</th>
-                         <th>TEAM</th>
-                         <th>PUBLIC NUMBER</th>
-                       </tr>
-                     </thead>
-                     <tbody style={{fontSize: '0.8rem'}}>
-                       {Admin.map((ga, i) => {
-                         return (
-                           <tr key={ga.F_ID}>
-                             <td>{ga.F_FNAME}</td>
-                             <td>{ga.F_LNAME}</td>
-                             <td>{ga.F_GROUP}</td>
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Admin.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 ADMIN
-                               </td>
-                             )}
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Admin.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 562-393-8800
-                               </td>
-                             )}
-                           </tr>
-                         );
-                       })}
-                       {It.map((ga, i) => {
-                         return (
-                           <tr key={ga.F_ID}>
-                             <td>{ga.F_FNAME}</td>
-                             <td>{ga.F_LNAME}</td>
-                             <td>{ga.F_GROUP}</td>
-                             {i === 0 && (
-                               <td
-                                 rowSpan={It.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 PRICING/IT/PPE
-                               </td>
-                             )}
-                             {i === 0 && (
-                               <td
-                                 rowSpan={It.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 562-393-8900
-                               </td>
-                             )}
-                           </tr>
-                         );
-                       })}
-                       {Asia.map((ga, i) => {
-                         return (
-                           <tr key={ga.F_ID}>
-                             <td>{ga.F_FNAME}</td>
-                             <td>{ga.F_LNAME}</td>
-                             <td>{ga.F_GROUP}</td>
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Asia.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 ASIA
-                               </td>
-                             )}
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Asia.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 562-393-8877
-                               </td>
-                             )}
-                           </tr>
-                         );
-                       })}
-                       {Lat.map((ga, i) => {
-                         return (
-                           <tr key={ga.F_ID}>
-                             <td>{ga.F_FNAME}</td>
-                             <td>{ga.F_LNAME}</td>
-                             <td>{ga.F_GROUP}</td>
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Lat.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 LATIN
-                               </td>
-                             )}
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Lat.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 562-393-8899
-                               </td>
-                             )}
-                           </tr>
-                         );
-                       })}
-                       {Acc.map((ga, i) => {
-                         return (
-                           <tr key={ga.F_ID}>
-                             <td>{ga.F_FNAME}</td>
-                             <td>{ga.F_LNAME}</td>
-                             <td>{ga.F_GROUP}</td>
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Acc.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 ACCOUNTING
-                               </td>
-                             )}
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Acc.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 562-304-9988
-                               </td>
-                             )}
-                           </tr>
-                         );
-                       })}
-                       {Wh.map((ga, i) => {
-                         return (
-                           <tr key={ga.F_ID}>
-                             <td>{ga.F_FNAME}</td>
-                             <td>{ga.F_LNAME}</td>
-                             <td>{ga.F_GROUP}</td>
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Wh.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 WHAREHOUSE
-                               </td>
-                             )}
-                             {i === 0 && (
-                               <td
-                                 rowSpan={Wh.length}
-                                 style={{ verticalAlign: "middle" }}
-                               >
-                                 562-321-5400
-                               </td>
-                             )}
-                           </tr>
-                         );
-                       })}
-                     </tbody>
-                   </Table>
+                   <div className="table-responsive">
+                     <Table size="sm" bordered className="text-center">
+                       <thead>
+                         <tr style={{ fontSize: "0.8rem", color: "blue" }}>
+                           <th>FIRST NAME</th>
+                           <th>LAST NAME</th>
+                           <th>EXTENSION #</th>
+                           <th>TEAM</th>
+                           <th>PUBLIC NUMBER</th>
+                         </tr>
+                       </thead>
+                       <tbody style={{ fontSize: "0.8rem" }}>
+                         {Admin.map((ga, i) => {
+                           return (
+                             <tr key={ga.F_ID}>
+                               <td>{ga.F_FNAME}</td>
+                               <td>{ga.F_LNAME}</td>
+                               <td>{ga.F_GROUP}</td>
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Admin.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   ADMIN
+                                 </td>
+                               )}
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Admin.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   562-393-8800
+                                 </td>
+                               )}
+                             </tr>
+                           );
+                         })}
+                         {It.map((ga, i) => {
+                           return (
+                             <tr key={ga.F_ID}>
+                               <td>{ga.F_FNAME}</td>
+                               <td>{ga.F_LNAME}</td>
+                               <td>{ga.F_GROUP}</td>
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={It.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   PRICING/IT/PPE
+                                 </td>
+                               )}
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={It.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   562-393-8900
+                                 </td>
+                               )}
+                             </tr>
+                           );
+                         })}
+                         {Asia.map((ga, i) => {
+                           return (
+                             <tr key={ga.F_ID}>
+                               <td>{ga.F_FNAME}</td>
+                               <td>{ga.F_LNAME}</td>
+                               <td>{ga.F_GROUP}</td>
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Asia.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   ASIA
+                                 </td>
+                               )}
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Asia.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   562-393-8877
+                                 </td>
+                               )}
+                             </tr>
+                           );
+                         })}
+                         {Lat.map((ga, i) => {
+                           return (
+                             <tr key={ga.F_ID}>
+                               <td>{ga.F_FNAME}</td>
+                               <td>{ga.F_LNAME}</td>
+                               <td>{ga.F_GROUP}</td>
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Lat.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   LATIN
+                                 </td>
+                               )}
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Lat.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   562-393-8899
+                                 </td>
+                               )}
+                             </tr>
+                           );
+                         })}
+                         {Acc.map((ga, i) => {
+                           return (
+                             <tr key={ga.F_ID}>
+                               <td>{ga.F_FNAME}</td>
+                               <td>{ga.F_LNAME}</td>
+                               <td>{ga.F_GROUP}</td>
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Acc.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   ACCOUNTING
+                                 </td>
+                               )}
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Acc.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   562-304-9988
+                                 </td>
+                               )}
+                             </tr>
+                           );
+                         })}
+                         {Wh.map((ga, i) => {
+                           return (
+                             <tr key={ga.F_ID}>
+                               <td>{ga.F_FNAME}</td>
+                               <td>{ga.F_LNAME}</td>
+                               <td>{ga.F_GROUP}</td>
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Wh.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   WHAREHOUSE
+                                 </td>
+                               )}
+                               {i === 0 && (
+                                 <td
+                                   rowSpan={Wh.length}
+                                   style={{ verticalAlign: "middle" }}
+                                 >
+                                   562-321-5400
+                                 </td>
+                               )}
+                             </tr>
+                           );
+                         })}
+                       </tbody>
+                     </Table>
                    </div>
                  </Col>
                </Row>
              </Card>
            </Col>
+           {/* Profile Information COLUMN */}
+           <Col className="mb-2">
+             <Row>
+               <Col sm="12">
+                 <Card
+                   className="mb-4"
+                   style={{ backgroundColor: "transparent" }}
+                 >
+                   <Row className="mt-4 ml-4">
+                     <Col>
+                       <h4>Profile</h4>
+                       <p>프로필</p>
+                       <Button
+                         outline
+                         style={{
+                           borderRadius: 0,
+                           position: "absolute",
+                           right: "2rem",
+                           top: "0",
+                         }}
+                         onClick={updatePass}
+                       >
+                         Save
+                       </Button>
+                       <form>
+                         <Row className="py-2">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               FIRST NAME
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               defaultValue={TOKEN.first}
+                               onChange={(e) => console.log(e.target.value)}
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                         <Row className="py-2">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               LAST NAME
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               value={TOKEN.last}
+                               onChange={(e) => console.log(e.target.value)}
+                               placeholder="NAME"
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                         <Row className="py-2">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               USER NAME
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               value={TOKEN.username.toUpperCase()}
+                               disabled
+                               onChange={(e) => console.log(e.target.value)}
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                         <Row className="py-2">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               PASSWORD
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               type="password"
+                               placeholder="PASSWORD"
+                               autoComplete="on"
+                               onChange={(e) => setPassword(e.target.value)}
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                         <Row className="mt-4">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               EXTENSION
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               disabled={true}
+                               onChange={(e) => console.log(e.target.value)}
+                               defaultValue={TOKEN.group}
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                         <Row className="py-2">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               EMAIL
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               disabled={true}
+                               onChange={(e) => console.log(e.target.value)}
+                               defaultValue={TOKEN.email.toUpperCase()}
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                         <Row className="py-2">
+                           <Col sm="2">
+                             <label
+                               style={{
+                                 marginTop: "0.6em",
+                                 fontSize: "0.8rem",
+                               }}
+                             >
+                               COMPANY
+                             </label>
+                           </Col>
+                           <Col>
+                             <Input
+                               disabled={true}
+                               onChange={(e) => console.log(e.target.value)}
+                               defaultValue="JAMES WORLDWIDE, INC"
+                               style={{
+                                 backgroundColor: "transparent",
+                                 border: "none",
+                                 fontSize: "0.8rem",
+                               }}
+                             />
+                           </Col>
+                         </Row>
+                       </form>
+                     </Col>
+                   </Row>
+                 </Card>
+               </Col>
+               <Col sm="12">
+                 <Card style={{ backgroundColor: "transparent" }}>
+                   <Row className="mt-4 ml-4">
+                     <Col>
+                       <h4>Human Resource Information</h4>
+                       <p style={{ fontSize: "0.9rem", paddingTop: '4rem' }}>
+                         Any Idea?
+                       </p>
+                       <p style={{ fontSize: "0.9rem", paddingTop: '4rem' }}>
+                         Contact it@jamesworldwide.com
+                       </p>
+                     </Col>
+                   </Row>
+                 </Card>
+               </Col>
+             </Row>
+           </Col>
          </Row>
-         <Button className="mt-4" onClick={() => router.push("/user/account")}>
+         {/* <Button className="mt-4" onClick={() => router.push("/user/account")}>
            MY ACCOUNTS
-         </Button>
+         </Button> */}
          <style jsx>
            {`
              @font-face {
@@ -451,6 +495,10 @@ export async function getServerSideProps({req}) {
     
     const FETCH = await fetch(`${process.env.BASE_URL}api/admin/getUsers`)
     const USERS = await FETCH.json();
+
+    if(cookies.jamesworldwidetoken) {
+      console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded user')
+    }
     // Pass data to the page via props
     return { props: { Cookie: cookies, User: USERS } };
   }

@@ -35,7 +35,6 @@ const Detail = ({ Cookie, AIR, FILE, EXTRA }) => {
         setMaster(AIR.M)
         setHouse(AIR.H)
         setAP(AIR.A)
-        // console.log(AIR)
     } else {
         setMaster(false)
     }
@@ -111,7 +110,7 @@ export async function getServerSideProps({req, query}) {
 
   //LOG
   if(cookies.jamesworldwidetoken) {
-    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' LOADED FORWARDING/AIR/'+query.Detail)
+    console.log(jwt.decode(cookies.jamesworldwidetoken).username+' loaded forwarding/aim/'+query.Detail)
   }
   return { props: { Cookie: cookies, AIR: FJSON, FILE: Files, EXTRA: Extra } };
 }

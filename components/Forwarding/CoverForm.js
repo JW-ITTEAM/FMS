@@ -40,7 +40,7 @@ export const CoverForm = ({ hbl, ams, pkg, vessel, loading, discharge, dest, oim
   dest && Info.push({dummy: 'DESTINATION', data: dest})
   ams && Info.push({dummy:'AMS HBL', data: ams})
 
-  container && container.length && container.map((ga, i)=>{
+  container && container.length>0 && container.map((ga, i)=>{
     Info.push({dummy: `CTNR ${i+1}`, data: `${ga.F_ConType} / ${ga.F_ContainerNo} / ${ga.F_SealNo}`})
   })
 

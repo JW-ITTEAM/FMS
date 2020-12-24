@@ -80,8 +80,8 @@ export const Files = ({FilePath, FILE}) => {
         isDragAccept
       ]);
       
-    return(
-        <>
+    return (
+      <>
         <hr />
         <Row className="mb-4">
           <Col sm="3">
@@ -94,22 +94,51 @@ export const Files = ({FilePath, FILE}) => {
             </span>
           </Col>
           <Col sm="9" className="pt-1">
-              <div {...getRootProps({ style })}>
-                <input {...getInputProps()} />
-                <p>UPLOAD FILES</p>
-              </div>
-                {files.length>0 && <Alert className="mt-2" color="warning">{files.length} File Uploaded Successfully</Alert>}
-    {fileRejections.length>0 && <Alert className="mt-2" color="danger">{fileRejections.length} File Upload Fail <br /> {fileRejections.map(ga=>(<span key={ga.file.path}>{ga.file.path} - {ga.errors[0].message}<br /></span>))}</Alert>}
-              <aside className="mt-3">
-                <ul>{files}</ul>
-              </aside>
+            <div {...getRootProps({ style })}>
+              <input {...getInputProps()} />
+              <p style={{ fontFamily: "Roboto" }}>UPLOAD FILES</p>
+            </div>
+            {files.length > 0 && (
+              <Alert className="mt-2" color="warning">
+                {files.length} File Uploaded Successfully
+              </Alert>
+            )}
+            {fileRejections.length > 0 && (
+              <Alert className="mt-2" color="danger">
+                {fileRejections.length} File Upload Fail <br />{" "}
+                {fileRejections.map((ga) => (
+                  <span key={ga.file.path}>
+                    {ga.file.path} - {ga.errors[0].message}
+                    <br />
+                  </span>
+                ))}
+              </Alert>
+            )}
+            <aside className="mt-3">
+              <ul>{files}</ul>
+            </aside>
           </Col>
         </Row>
         <Row>
-            {FILE && FILE.map(ga=>(
-              <Button key={ga.basename} size="sm" target="__empty" href={`${process.env.DOWNLOADABLE}${ga.filename}`} className="mr-2 mb-1" color="primary" outline><i className="fa fa-file mr-2"></i>{ga.basename}</Button>
-          ))}
+          <Col>
+            {FILE &&
+              FILE.map((ga) => (
+                <Button
+                  key={ga.basename}
+                  size="sm"
+                  target="__empty"
+                  href={`${process.env.DOWNLOADABLE}${ga.filename}`}
+                  className="mr-2 mb-1"
+                  color="primary"
+                  style={{fontFamily: 'Roboto', overflow: 'hidden', textOverflow: 'ellipsis'}}
+                  outline
+                >
+                  <i className="fa fa-file mr-2"></i>
+                  {ga.basename.length>8?ga.basename.substring(0,5)+".."+ga.basename.substring(ga.basename.length-4, ga.basename.length):ga.basename}
+                </Button>
+              ))}
+          </Col>
         </Row>
       </>
-)}
+    );}
 export default Files;

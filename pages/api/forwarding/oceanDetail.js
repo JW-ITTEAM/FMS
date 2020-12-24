@@ -62,7 +62,8 @@ export default async (req, res) => {
     function CONTAINER(OCEAN) {
       const MASTER = parseInt(req.headers.import)?'OIM':'OOM'
       const HOUSE = parseInt(req.headers.import)?'OIH':'OOH'
-      const READ = `SELECT * from T_${MASTER}CONTAINER where F_${MASTER}BLID='${OCEAN.M.F_ID}'`
+      const CNT = parseInt(req.headers.import)?'F_OIMCntID':'F_OOMCNTID'
+      const READ = `SELECT T_${MASTER}CONTAINER.*, T_${HOUSE}CONTAINER.F_${HOUSE}BLID as F_${HOUSE}BLID from T_${MASTER}CONTAINER LEFT JOIN T_${HOUSE}CONTAINER on T_${MASTER}CONTAINER.F_ID = T_${HOUSE}CONTAINER.${CNT} where F_${MASTER}BLID='${OCEAN.M.F_ID}'`
       return new Promise((resolve)=> {
         request.query(
           READ,

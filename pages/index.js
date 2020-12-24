@@ -427,11 +427,13 @@ const About = ({Cookie, Link}) => {
                 <Button style={{backgroundColor: 'transparent', color: "white", borderRadius: '0', border: '3px solid #fff', fontWeight: '600'}}>CONTACT US</Button>
               </Col>
             </Row>
-            
             <Footer />
 
            </Container>
          </main>
+            <div className="loader-wrapper">
+              <span className="loader"><span className="loader-inner"></span></span>
+            </div>
          <style global jsx>
            {`
              * {
