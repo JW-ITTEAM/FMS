@@ -339,20 +339,16 @@ export async function getServerSideProps({ req, query }) {
         ],
       },
     }
-  ).then(t=>t.json()).catch([]);
-  // var result = [];
-  // if (fetchs.status === 200) {
-  //   // Fetch result as array when successfully load data
-  //   result = await fetchs.json();
-  // } else {
-  //   if(fetchs.status=== 400) {
-  //     // Fetch result as empty array
-  //     result = await fetchs.json();
-  //   } else {
-  //     // When error occurs, set the result as empty array
-  //     result = []
-  //   }
-  // }
+  ).then(t=>{
+    if(t.status===200) {
+      return t.json()
+    } else {
+      return []
+    }
+  }).catch(err=>{
+    console.log(err)
+    return []
+  });
   if(cookies.jamesworldwidetoken) {
     console.log(jwt.decode(cookies.jamesworldwidetoken).username+` loaded forwarding${Object.keys(query).length? "/"+query.search : ""}`)
   }

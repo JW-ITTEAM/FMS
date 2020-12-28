@@ -21,7 +21,7 @@ const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
-    }).then((t) => t.json());
+    }).then(t => t.json()).catch(err=>console.log(err));
     const token = res.token;
     if (token) {
       const json = jwt.decode(token) as { [key: string]: string };
