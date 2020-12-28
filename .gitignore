@@ -1,5 +1,5 @@
 node_modules
 .next
-next.config.js
 out_functions
 out_publish
+next.config.js

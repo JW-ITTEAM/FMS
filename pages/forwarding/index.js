@@ -319,7 +319,7 @@ export async function getServerSideProps({ req, query }) {
     req ? req.headers.cookie || "" : window.document.cookie
   );
   
-  const fetchs = await fetch(
+  const searchResult = await fetch(
     `${process.env.BASE_URL}api/forwarding/freightStreamSearch`,
     {
       headers: {
@@ -339,25 +339,25 @@ export async function getServerSideProps({ req, query }) {
         ],
       },
     }
-  );
-  var result = [];
-  if (fetchs.status === 200) {
-    // Fetch result as array when successfully load data
-    result = await fetchs.json();
-  } else {
-    if(fetchs.status=== 400) {
-      // Fetch result as empty array
-      result = await fetchs.json();
-    } else {
-      // When error occurs, set the result as empty array
-      result = []
-    }
-  }
+  ).then(t=>t.json()).catch([]);
+  // var result = [];
+  // if (fetchs.status === 200) {
+  //   // Fetch result as array when successfully load data
+  //   result = await fetchs.json();
+  // } else {
+  //   if(fetchs.status=== 400) {
+  //     // Fetch result as empty array
+  //     result = await fetchs.json();
+  //   } else {
+  //     // When error occurs, set the result as empty array
+  //     result = []
+  //   }
+  // }
   if(cookies.jamesworldwidetoken) {
     console.log(jwt.decode(cookies.jamesworldwidetoken).username+` loaded forwarding${Object.keys(query).length? "/"+query.search : ""}`)
   }
   // Pass data to the page via props
-  return { props: { Cookie: cookies, Re: result } };
+  return { props: { Cookie: cookies, Re: searchResult } };
 }
 
 export default Index;
