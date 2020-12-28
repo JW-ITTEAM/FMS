@@ -195,7 +195,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
         { title: "AGENT", data: Master.AGENT || "" },
         { title: "CARRIER", data: Master.CARRIER || "" }
       ]
-      const MASTER2 = [
+      var MASTER2 = [
         { title: "CONTAINER LOAD", data: Master.F_LCLFCL=='F' ? "FCL" : "LCL"},
         { title: "TYPE", data: Master.F_MoveType },
         { title: "VESSEL", data: <a target='_blank' href={`http://www.google.com/search?q=marinetraffic+${Master.F_Vessel} ${Master.F_Voyage}`}>{`${Master.F_Vessel} ${Master.F_Voyage}`}</a> },
@@ -203,6 +203,8 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
         { title: "DISCHARGE", data: Master.F_DisCharge },
         { title: "FINAL DEST", data: Master.F_FinalDest },
       ]
+      // Containers.map((ga, i)=>MASTER2.push({title: `CONTAINER ${i+1}`, data: ga.F_ContainerNo}))
+
       const [isHouseOpen, setIsHouseOpen] = useState(false);
       const houseToggle=()=>setIsHouseOpen(!isHouseOpen);
       return (
@@ -214,18 +216,19 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                 <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.85rem'}}>
                   <tbody>
                     {MASTER1.map((ga) => (
-                      <tr key={ga.title} className="">
+                      <tr key={ga.title}>
                         <th className="text-success">{ga.title}</th>
                         <th className="text-secondary">{ga.data}</th>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
+                
                 <hr />
                 <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.85rem'}}>
                   <tbody>
                     {MASTER2.map((ga) => (
-                      <tr key={ga.title} className="">
+                      <tr key={ga.title}>
                         <th className="text-success">{ga.title}</th>
                         <th className="text-secondary">{ga.data}</th>
                       </tr>
@@ -257,7 +260,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                         className="text-success py-1"
                       >
                         <Row className="py-0">
-                          <Col sm="9">House</Col>
+                          <Col sm="9">House {ga.F_ID}</Col>
                           <Col>
                             {House.length > 2 && i === 0 && (
                               <Button
@@ -321,7 +324,8 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                                 if(ele.F_OIHBLID==ga.F_ID) 
                                   return(
                                     <>
-                                    <tr key={ele.F_ID}>
+                                    <React.Fragment key={ele.F_ID+ele.F_OIHBLID}>
+                                    <tr>
                                       <th className="text-primary">CONTAINER</th>
                                       <th className="text-secondary">{ele.F_ContainerNo}</th> 
                                     </tr>
@@ -337,6 +341,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                                       <th className="text-primary">PKG</th>
                                       <th className="text-secondary">{numberWithCommas(ga.F_PKGS) || numberWithCommas(ga.F_Pkgs)}</th> 
                                     </tr>
+                                    </React.Fragment>
                                     </>
                                   )
                           })}
@@ -357,7 +362,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                           className="text-success py-1"
                         >
                           <Row>
-                            <Col>House</Col>
+                            <Col sm="9">House {ga.F_ID}</Col>
                           </Row>
                         </CardHeader>
                         <Table className="table-borderless mt-2 table-sm" style={{fontSize: '0.8rem'}}>
@@ -410,7 +415,8 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                                 if(ele.F_OIHBLID==ga.F_ID) 
                                   return(
                                     <>
-                                    <tr key={ele.F_ID}>
+                                    <React.Fragment key={ele.F_ID+ele.F_OIHBLID}>
+                                    <tr>
                                       <th className="text-primary">CONTAINER</th>
                                       <th className="text-secondary">{ele.F_ContainerNo}</th> 
                                     </tr>
@@ -426,6 +432,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                                       <th className="text-primary">PKG</th>
                                       <th className="text-secondary">{numberWithCommas(ga.F_PKGS) || numberWithCommas(ga.F_Pkgs)}</th> 
                                     </tr>
+                                    </React.Fragment>
                                     </>
                                   )
                           })}

@@ -8,6 +8,7 @@
     "serverDev": "node server.js",
     "build": "next build",
     "start": "next start -p 80",
+    "postbuild": "next-on-netlify",
     "docker": "docker build . -t fms_sarah_version1.0.4"
   },
   "keywords": [],
@@ -29,6 +30,7 @@
     "moment": "^2.27.0",
     "mssql": "^6.2.1",
     "next": "^9.5.5",
+    "next-on-netlify": "^2.6.3",
     "node-fetch": "^2.6.1",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
