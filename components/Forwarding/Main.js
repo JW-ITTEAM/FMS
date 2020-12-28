@@ -45,7 +45,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
               FORMS
             </span>
           </Col>
-          {TYPE=="OCEAN" ? 
+          {TYPE=="OCEAN" ?
           <Col sm="9" className="pt-1">
             <ButtonGroup className="pr-3">
                 <Button size="sm" outline color="primary" onClick={()=>setAPType("CHECK")}>Check</Button>
@@ -203,7 +203,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
         { title: "DISCHARGE", data: Master.F_DisCharge },
         { title: "FINAL DEST", data: Master.F_FinalDest },
       ]
-      // Containers.map((ga, i)=>MASTER2.push({title: `CONTAINER ${i+1}`, data: ga.F_ContainerNo}))
+      Containers.map((ga, i)=>MASTER2.push({title: `CONTAINER ${i+1}`, data: ga.F_ContainerNo}))
 
       const [isHouseOpen, setIsHouseOpen] = useState(false);
       const houseToggle=()=>setIsHouseOpen(!isHouseOpen);
@@ -260,7 +260,7 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                         className="text-success py-1"
                       >
                         <Row className="py-0">
-                          <Col sm="9">House {ga.F_ID}</Col>
+                          <Col sm="9">House</Col>
                           <Col>
                             {House.length > 2 && i === 0 && (
                               <Button
@@ -321,10 +321,9 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                             </th>
                           </tr>
                           {Containers.map(ele=>{
-                                if(ele.F_OIHBLID==ga.F_ID) 
+                                if(ele.F_OIHBLID==ga.F_ID)
                                   return(
-                                    <>
-                                    <React.Fragment key={ele.F_ID+ele.F_OIHBLID}>
+                                    <React.Fragment key={ga.F_ID+ele.F_ID}>
                                     <tr>
                                       <th className="text-primary">CONTAINER</th>
                                       <th className="text-secondary">{ele.F_ContainerNo}</th> 
@@ -342,7 +341,6 @@ const Main = ({ TYPE, OTHER, Master, House, Containers, AP, FILES, USER, EXTRA }
                                       <th className="text-secondary">{numberWithCommas(ga.F_PKGS) || numberWithCommas(ga.F_Pkgs)}</th> 
                                     </tr>
                                     </React.Fragment>
-                                    </>
                                   )
                           })}
                         </tbody>

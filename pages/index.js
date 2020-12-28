@@ -35,7 +35,7 @@ const items = [
   ];
   
 
-const About = ({Cookie, Link}) => { 
+const About = ({Cookie}) => { 
   const router = useRouter()
   const TOKEN = jwt.decode(Cookie.jamesworldwidetoken)
   const [loaded, setLoaded] = useState(false);
@@ -164,7 +164,6 @@ const About = ({Cookie, Link}) => {
                <Col sm="12" md={{ size: 6, offset: 3 }} className="text-center">
                  <h4 className="text-muted mb-4">OUTSTANDING SERVICES</h4>
                  <h1>LOVE US</h1>
-                 <a href={Link.login}>GOOGLE</a>
                </Col>
              </Row>
              <Row className="mt-4" style={{paddingLeft: '6rem', paddingRight: '6rem'}}>
@@ -556,7 +555,7 @@ const About = ({Cookie, Link}) => {
 
 export async function getServerSideProps({req, query}) {
   const cookies = cookie.parse(req? req.headers.cookie || "" : window.document.cookie)
-  const Fetchs = await fetch(`${process.env.BASE_URL}api/file/google`).then(t=>t.json())
+  // const Fetchs = await fetch(`${process.env.BASE_URL}api/file/google`).then(t=>t.json())
   
   // const ffetchs = await fetch(`${process.env.BASE_URL}api/file/drive`)
   // console.log(ffetchs)
@@ -564,7 +563,7 @@ export async function getServerSideProps({req, query}) {
   // console.log(fetchs)
 
   // Pass data to the page via props
-  return { props: { Cookie: cookies, Link: Fetchs } };
+  return { props: { Cookie: cookies } };
 }
 
 export default About;
